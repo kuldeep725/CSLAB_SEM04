@@ -66,7 +66,7 @@ int main(){
 		Node *p = getFront(list);						//getting front pointer of list
 		while(p != NULL) {
 			int v = getData(p);
-			if(pre[u] < pre[v]&& post[v] < post[u]) {	//condition for tree/forward edge
+			if(pre[u] < pre[v] && post[v] < post[u]) {	//condition for tree/forward edge
 				if(getParent(path, v) == u) {			//if u is parent of v
 					printf("%d-%d  	: %s\n", u, v, "Tree Edge");
 				}
