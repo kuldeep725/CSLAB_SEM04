@@ -47,5 +47,6 @@ class Path {
 		*/
 		int getParent(int v);
 
+		void freePath();
 };
 #endif

@@ -26,10 +26,10 @@ Path::Path(Graph g, int source) {
 }
 
 Path::~Path() {
-	delete[] visited;
-	delete[] parent;
-	delete[] pre;
-	delete[] post;
+	// delete[] visited;
+	// delete[] parent;
+	// delete[] pre;
+	// delete[] post;
 }
 
 void Path::dfs(Graph g, int v) {
@@ -63,4 +63,11 @@ int * Path::getPost() {
 
 int Path::getParent(int v) {
 	return parent[v];
+}
+
+void Path::freePath() {
+	delete[] visited;
+	delete[] parent;
+	delete[] pre;
+	delete[] post;
 }

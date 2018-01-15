@@ -57,3 +57,8 @@ int Graph::getE() {
 LinkedList Graph::getAdjacencyList(int v) {
 	return adj[v];
 }
+
+void Graph::freeGraph() {
+	delete[] size;
+	// delete[] adj;
+}

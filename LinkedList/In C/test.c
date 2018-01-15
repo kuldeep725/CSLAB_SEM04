@@ -3,13 +3,15 @@
 
 int main() {
 
-	List *list = getList(list);
+	List list;
+	getList(list);
 	printf("before : %s\n", isEmpty(list)  ? "true" : "false");
 	push(list, 1);
 	push(list, 2);
 	push(list, 3);
 	push(list, 4);
-	List *listNew = getList(listNew);
+	List listNew;
+	getList(listNew);
 	push(listNew, 15);
 	push(listNew, 6);
 	push(listNew, 7);
@@ -19,8 +21,8 @@ int main() {
 	// 	list.pop();
 	// }
 	printf("after : %s\n", isEmpty(list)  ? "true" : "false");
-	printf("list->last = %d ", last(list));
-	printf("list->first = %d\n", first(list));
+	printf("list. last = %d ", last(list));
+	printf("list. first = %d\n", first(list));
 	printf("listNew->last = %d ", last(listNew));
 	printf("listNew->first = %d\n", first(listNew));
 	printf("size(list) = %d\n", size(list));
@@ -30,8 +32,8 @@ int main() {
 	pushFront(list, 30);
 	pushFront(list, 40);
 	printf("after : %s\n", isEmpty(list)  ? "true" : "false");
-	printf("list->last = %d ", last(list));
-	printf("list->first = %d\n", first(list));
+	printf("list.last = %d ", last(list));
+	printf("list.first = %d\n", first(list));
 	printf("listNew->last = %d ", last(listNew));
 	printf("listNew->first = %d\n", first(listNew));
 	printf("size(list) = %d\n", size(list));
@@ -43,7 +45,7 @@ int main() {
 	// int indexOf4 = search(list, 121);
 	// printf("%d %d %d %d\n", indexOf, indexOf2, indexOf3, indexOf4);
 	printf("%s, %s\n", contains(list, 5) ? "true":"false", contains(list, 10) ? "true":"false");
-	List *reverseList = reverse(list);
+	List reverseList = reverse(list);
 
 	// p = getEnd(list);
 	// while(p != NULL) {
@@ -63,8 +65,8 @@ int main() {
 	// pop(list);
 	// pop(listNew);
 	// printf("\n");
-	// printf("list->last = %d ", last(list));
-	// printf("list->first = %d\n", first(list));
+	// printf("list. last = %d ", last(list));
+	// printf("list. first = %d\n", first(list));
 	// printf("listNew->last = %d ", last(listNew));
 	// printf("listNew->first = %d\n", first(listNew));
 	// printf("size(list) = %d\n", size(list));

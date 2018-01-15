@@ -1,4 +1,4 @@
-all : DfsWithDirectedGraph.out valgrind
+all : DfsWithDirectedGraph.out
 DfsWithDirectedGraph.out :	DepthFirstPaths.o DfsWithDirectedGraph.o Graph.o LinkedList.o
 			gcc DepthFirstPaths.o DfsWithDirectedGraph.o Graph.o LinkedList.o -o DfsWithDirectedGraph.out
 

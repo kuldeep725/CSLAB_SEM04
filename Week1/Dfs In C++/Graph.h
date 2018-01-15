@@ -56,6 +56,7 @@ class Graph {
 		*/
 		LinkedList getAdjacencyList(int );
 
+		void freeGraph();
 
 	};
 

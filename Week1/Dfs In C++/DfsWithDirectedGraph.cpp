@@ -74,6 +74,8 @@ int main() {
 
 		}
 	}
+	graph.freeGraph();
+	path.freePath();
 
 	return 0;
 
