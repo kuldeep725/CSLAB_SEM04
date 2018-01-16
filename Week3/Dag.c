@@ -33,7 +33,7 @@ int main() {
 		if(flag == 1) break;
 	}
 	if(flag != 1) {
-
+		
 	}
 	else {
 		printf("The graph is cyclic.\n");
