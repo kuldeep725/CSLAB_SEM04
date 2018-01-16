@@ -30,46 +30,46 @@ typedef struct List {
 /*
 	to create an empty linked list 
 */
-void getList(List );
+void getList(List *);
 
 /*
 	to push an element at the end of the list
 */
-void push(List , int );
+void push(List *, int );
 
 /*
 	to pop/delete the last element in the list
 */
-int pop(List );
+int pop(List *);
 
 /*
 	to push an element at the front of the list
 */
-void pushFront(List , int );
+void pushFront(List *, int );
 
 /*
 	to pop an element from the front in the list
 */
-int popFront(List );
+int popFront(List *);
 /*
 	to get the last element in the list
 */
-int last (List );
+int last (List *);
 
 /*
 	to get the first element in the list
 */
-int first (List );
+int first (List *);
 
 /*
 	to check if the list is empty 
 */
-bool isEmpty(List );
+bool isEmpty(List *);
 
 /*
 	to get the size of the list
 */
-int size(List );
+int size(List *);
 
 /*
 	to go to the previous pointer
@@ -89,22 +89,22 @@ int getData (Node *);
 /*
 	to get the pointer to the first position in the list
 */
-Node * getFront (List list);
+Node * getFront (List *list);
 
 /*
 	to get the pointer to the last position in the list
 */
-Node * getRear (List list);
+Node * getRear (List *list);
 
 /*
 	to clear all the memory of the list
 */
-void clear (List list);
+void clear (List *list);
 
 /*
 	to reverse the elements in the list and return the list
 */
-List reverse(List list);
+void reverse(List *list);
 
 /*
 	*	to search an element in the list and return its index
@@ -112,11 +112,11 @@ List reverse(List list);
 	*	return INT_MIN if list is empty or element doesn't
 		exist in the list
 */
-int search(List , int );
+int search(List *, int );
 
 /*
 	check if element exists in the list or not
 */
-bool contains(List ,int );
+bool contains(List *,int );
 
 #endif
