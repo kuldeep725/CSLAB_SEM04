@@ -53,4 +53,8 @@ int E(Graph *);
 */
 List getAdjacencyList(Graph *, int );
 
+/*
+	to free memory
+*/
+void freeGraph(Graph *);
 #endif

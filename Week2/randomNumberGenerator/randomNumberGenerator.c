@@ -1,7 +1,3 @@
-/*
-	* Name 	 	: 	Kuldeep Singh Bhandari
-	* Roll No.  	:	111601009
-*/
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -50,10 +46,13 @@ int main() {
 	FILE *ftext = fopen(textFile, "w");
 	int i;
 	for(i = 0; i < n; i++) {
-		num = rand()%10000+1;
+		num = rand()%100000+1;
 		fprintf(ftext, "%ld ", num);
-		long binary = bin(num);
-		long x = fwrite(&binary, sizeof(binary), 1, fbin);
+		printf("%ld ", num);
+		// long binary = bin(num);
+		fwrite(&num, sizeof(long), 1, fbin);
+
+		// long x = fwrite(&binary, sizeof(binary), 1, fbin);
 		// printf("x = %ld\n", x);
 		/*
 		**	size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)

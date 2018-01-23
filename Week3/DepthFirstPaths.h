@@ -8,7 +8,7 @@
 #ifndef DEPTHFIRSTPATHS_H
 #define DEPTHFIRSTPATHS_H
 
-typedef struct Path {
+typedef struct Vertex  {
 
 	int *visited;
 	int *parent;
@@ -16,33 +16,55 @@ typedef struct Path {
 	int *pre;
 	int *post;
 
-} Path;
+} Vertex ;
 
 /*
-	to find the paths of the given vertex
-	from all the vertices in graph and return 
-	pointer Path *
+	to travel all the vertices of a graph using dfs
 */
-void findPaths(Graph *, int );
+void depthFirstSearch(Vertex *, Graph *, int );
+
+/*
+	to perform topological sorting of the given graph
+*/
+void topologicalSort(Vertex *, Graph *, List *);
+
+/*
+	to find dfs and create a stack of vertices in order of
+	their post timing
+*/
+void dfsReversePost(Vertex *, Graph *, List *, int );
+
+/*
+	to make all the vertices of the graph unvisited
+*/
+void makeAllUnvisited(Vertex *, Graph *);
+
+/*
+	display the vertices of a cycle in the directed graph
+*/
+void displayDirectedCycle(Vertex *, Graph *, int);
 
 /*
 	to find depth first search path
 */
-void dfs(Path *, Graph *, int );
+void dfs(Vertex *, Graph *, int );
 
 /*
 	to return pre array 
 */
-int * getPre(Path *);
+int * getPre(Vertex *);
 /*
 	to return post array
 */
-int * getPost(Path *);
+int * getPost(Vertex *);
 
 /*
-	to return parent of the vertex v
+	to return parent of the Vertex  v
 */
-int getParent(Path *p, int v);
+int getParent(Vertex *p, int v);
 
-void freePath(Path *p);
+/*
+	to free the memory
+*/
+void freeVertex(Vertex *p);
 #endif

@@ -61,3 +61,8 @@ int E(Graph *graph) {
 List getAdjacencyList(Graph *graph, int v) {
 	return graph->adj[v];
 }
+
+void freeGraph(Graph *graph) {
+	free(graph->size);
+	free(graph->adj);
+}

@@ -13,74 +13,127 @@
 
 static int count = 1;
 
-void findPaths(Path *path, Graph *g, int v) {
+void depthFirstSearch(Vertex *vertex, Graph *g, int v) {
 
 	/***********
 		allocating memory to structure elements
 	***********/
-	// Path *path = (Path *) malloc(sizeof(Path));
-	path->visited = (int *) malloc(sizeof(int) * V(g));
-	path->parent = (int *) malloc(sizeof(int) * V(g));
-	path->pre = (int *) malloc(sizeof(int) * V(g));
-	path->post = (int *) malloc(sizeof(int) * V(g));
-	path->s = v;
+	vertex->visited = (int *) malloc(sizeof(int) * V(g));
+	vertex->parent = (int *) malloc(sizeof(int) * V(g));
+	vertex->pre = (int *) malloc(sizeof(int) * V(g));
+	vertex->post = (int *) malloc(sizeof(int) * V(g));
+	vertex->s = v;
 	int i;
 	for(i = 0; i < V(g); i++) {
-		path->visited[i] = 0;
-		path->parent[i] = -1;
+		vertex->visited[i] = 0;
+		vertex->parent[i] = -1;
 	}
-	/******calling dfs to print the dfs path for source vertex v*******/
-	dfs(path, g, path->s);
+	/******calling dfs to print the dfs Vertex starting from source vertex s*******/
 	for(i = 0; i < V(g); i++) {
-		if(!path->visited[i])	dfs(path,g,i);
+		if(!vertex->visited[i])	dfs(vertex,g,i);
 	}
-	// return path;		//returning path pointer of structure Path
 
 }
 
-void dfs(Path *path, Graph *g, int v) {
+void topologicalSort(Vertex *vertex, Graph *g, List *reversePost) {
 
-	path->visited[v] = 1;		//marking vertex 'v' visited
 	int i;
-	List *list = getAdjacencyList(g, v);
-	path->pre[v] = count++;					// pre array "start time of vertex 'v'"
-	Node *p = getFront(list);
-	printf("%d ", v);
+	for(i = 0; i < V(g); i++) {
+		if(!vertex->visited[i])	dfsReversePost(vertex, g, reversePost,i);
+	}
+}
+
+void dfsReversePost(Vertex *vertex, Graph *g, List *reversePost, int v) {
+
+	vertex->visited[v] = 1;		//marking vertex 'v' visited
+	List list = getAdjacencyList(g, v);
+	Node *p = getFront(&list);
+
 	while(p != NULL) {
-		// printf("data = %d\n", getData(p));
 		int current = getData(p);
-		if(!path->visited[current]) {
-			path->visited[current] = 1;
-			path->parent[current] = v;		//making 'v' to be parent of 'current'
-			dfs(path, g, current);			//calling dfs for current vertex
+		if(!vertex->visited[current]) {
+			vertex->parent[current] = v;		//making 'v' to be parent of 'current'
+			dfsReversePost(vertex, g, reversePost, current);			//calling dfs for current vertex
 		}
 		p = next(p);
 	}
-	path->post[v] = count++;				// post array "end time of vertex 'v'"
+	// printf("%d ", v);
+	push(reversePost, v);
 
 }
 
-int * getPre(Path *p) {
-	if(p == NULL) return NULL;
-	return p->pre;
+
+void dfs(Vertex *vertex, Graph *g, int v) {
+
+	vertex->visited[v] = 1;		//marking vertex 'v' visited
+	int i;
+	List list = getAdjacencyList(g, v);
+	vertex->pre[v] = count++;					// pre array "start time of vertex 'v'"
+	Node *p = getFront(&list);
+	// printf("%d ", v);
+	while(p != NULL) {
+		// printf("data = %d\n", getData(p));
+		int current = getData(p);
+		if(!vertex->visited[current]) {
+			vertex->parent[current] = v;		//making 'v' to be parent of 'current'
+			dfs(vertex, g, current);			//calling dfs for current vertex
+		}
+		p = next(p);
+	}
+	vertex->post[v] = count++;				// post array "end time of vertex 'v'"
+
 }
 
-int * getPost(Path *p) {
-	if(p == NULL) return NULL;
-	return p->post;
+void makeAllUnvisited(Vertex *vertex, Graph *g) {
+
+	int i;
+	for(i = 0; i < V(g); i++) {
+		vertex->visited[i] = 0;
+	}
+
 }
 
-int getParent(Path *p, int v) {
-	if(p == NULL) return INT_MIN;
-	return p->parent[v];
+void displayDirectedCycle(Vertex *vertex, Graph *graph, int cycleVertex) {
+
+	int u;
+	List cycleList;
+	getList(&cycleList);
+
+	int ele;
+	for(u = cycleVertex; u != -1; u = vertex->parent[u]) {
+		ele = u;
+		push(&cycleList, u);
+	}
+	printf("START-->");
+	while(!isEmpty(&cycleList)) {
+		printf("%d-->", pop(&cycleList));
+	}
+	printf("%d-->", ele);
+	printf("END\n");
+
 }
 
-void freePath(Path *p) {
+int * getPre(Vertex *vertex) {
+	if(vertex == NULL) return NULL;
+	return vertex->pre;
+}
 
-	free(p->visited);
-	free(p->parent);
-	free(p->pre);
-	free(p->post);
-	free(p);
+int * getPost(Vertex *vertex) {
+	if(vertex == NULL) return NULL;
+	return vertex->post;
+}
+
+int getParent(Vertex *vertex, int v) {
+	if(vertex == NULL) return INT_MIN;
+	return vertex->parent[v];
+}
+
+void freeVertex(Vertex *vertex) {
+
+	free(vertex->visited);
+	free(vertex->parent);
+	free(vertex->pre);
+	free(vertex->post);
+	// free(p);
 
 }
