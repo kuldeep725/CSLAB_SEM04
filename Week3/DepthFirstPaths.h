@@ -42,7 +42,7 @@ void makeAllUnvisited(Vertex *, Graph *);
 /*
 	display the vertices of a cycle in the directed graph
 */
-void displayDirectedCycle(Vertex *, Graph *, int);
+void displayDirectedCycle(Vertex *, Graph *, int, int);
 
 /*
 	to find depth first search path

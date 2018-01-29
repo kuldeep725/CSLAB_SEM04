@@ -17,8 +17,16 @@ void buildHeap(int *, int);
 
 void insert(int *, int);
 
-int delete(int *);
+int deleteMin(int *);
+
+void push(char);
+
+void pop();
+
+void print(int *, int);
 
 void display(int *);
+
+void heapSort(int *);
 
 #endif

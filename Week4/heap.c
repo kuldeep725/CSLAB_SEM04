@@ -7,7 +7,10 @@
 #include<stdio.h>
 
 int N = -1;
+char indent[50];
+int j = 0;
 
+//utility function to swap two elements in array
 void swap(int *a, int p, int q) {
 	// printf("exchange %d and %d\n", a[p], a[q]);
 	int swap = a[p];
@@ -15,6 +18,7 @@ void swap(int *a, int p, int q) {
 	a[q] = swap;
 }
 
+//function to send an element up the heap maintaining heap property
 void swim(int *a, int k, int ele) {
 
 	while((k-1)/2 >= 0 && a[k] < a[(k-1)/2]) {
@@ -24,6 +28,7 @@ void swim(int *a, int k, int ele) {
 
 }
 
+//function to send an element down the heap maintaining heap property
 void minHeapify(int *a, int pos) {
 
 	if(N == 0)	return;				//nothing should be done
@@ -49,6 +54,7 @@ void minHeapify(int *a, int pos) {
 
 }
 
+//building heap using minHeapify
 void buildHeap(int *a, int n) {
 
 	N = n-1;
@@ -62,6 +68,7 @@ void buildHeap(int *a, int n) {
 
 }
 
+//to insert an element in the heap
 void insert(int *a, int ele) {
 
 	a[++N] = ele;
@@ -69,7 +76,8 @@ void insert(int *a, int ele) {
 
 }
 
-int delete(int *a) {
+//to delete the minimum element in the heap
+int deleteMin(int *a) {
 
 	// printf("N = %d\n", N);
 	// printf("a[0] = %d\n", a[0]);
@@ -96,12 +104,63 @@ int delete(int *a) {
 
 }
 
+//utility function to modify the array 'indent'
+void push(char c) {
+
+	indent[j++] = ' ';
+	indent[j++] = c;
+	indent[j++] = ' ';
+	indent[j++] = ' ';
+	indent[j]   = '\0';
+
+}
+
+void pop() {
+	indent[j-4] = '\0';
+	j = j-4;
+}
+
+//recursive function to print the heap in tree format
+void print(int *a, int k) {
+
+	printf("%-2d\n", a[k]);
+	
+	if(2*k+1 <= N) {
+		printf("%s `--", indent);
+		push('|');
+		print(a, 2*k+1);
+		pop();
+	}
+	if(2*k+2 <= N) {
+		printf("%s `--", indent);
+		push(' ');
+		print(a, 2*k+2);
+		pop();
+	}
+
+}
+
+// to display the heap in tree format
 void display(int *a) {
 
+	print(a, 0);
+
+}
+
+//function to sort the array 
+void heapSort(int *a) {
+
 	int i;
-	for(i = 0; i <= N; i++) {
-		printf("%d ", a[i]);
+	int b[100];
+	int n = N;
+	for(i = 0; i <= n; i++) {
+		b[i] = deleteMin(a);
+		printf("%d ", b[i]);
 	}
+	for(i = 0; i <= n; i++) {
+		a[i] = b[i];
+	}
+	N = n;
 	printf("\n");
 
 }

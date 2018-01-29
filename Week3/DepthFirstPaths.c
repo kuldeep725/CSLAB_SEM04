@@ -93,22 +93,23 @@ void makeAllUnvisited(Vertex *vertex, Graph *g) {
 
 }
 
-void displayDirectedCycle(Vertex *vertex, Graph *graph, int cycleVertex) {
+void displayDirectedCycle(Vertex *vertex, Graph *graph, int beginVertex, int endVertex) {
 
 	int u;
 	List cycleList;
 	getList(&cycleList);
 
 	int ele;
-	for(u = cycleVertex; u != -1; u = vertex->parent[u]) {
+	for(u = endVertex; u != beginVertex; u = vertex->parent[u]) {
 		ele = u;
 		push(&cycleList, u);
 	}
+	push(&cycleList, beginVertex);
 	printf("START-->");
 	while(!isEmpty(&cycleList)) {
 		printf("%d-->", pop(&cycleList));
 	}
-	printf("%d-->", ele);
+	printf("%d-->", beginVertex);
 	printf("END\n");
 
 }

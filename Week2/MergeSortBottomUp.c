@@ -59,7 +59,7 @@ int main(int argc, char const *argv[]) {
 	while(fread(&x, sizeof(x), 1, fin) ==  1) {
 		printf("%ld ", x);
 		// fprintf(fout, "%ld ", dec(x));
-		fprintf(fout, "%ld ", x);
+		fprintf(fout, "%ld\n", x);
 	}
 	printf("\n");
 	/****************

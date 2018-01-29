@@ -47,7 +47,7 @@ int main() {
 	int i;
 	for(i = 0; i < n; i++) {
 		num = rand()%100000+1;
-		fprintf(ftext, "%ld ", num);
+		fprintf(ftext, "%ld\n", num);
 		printf("%ld ", num);
 		// long binary = bin(num);
 		fwrite(&num, sizeof(long), 1, fbin);

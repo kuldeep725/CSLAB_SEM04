@@ -1,4 +1,3 @@
-all : DfsWithDirectedGraph.out
 DfsWithDirectedGraph.out :	DepthFirstPaths.o DfsWithDirectedGraph.o Graph.o LinkedList.o
 			gcc DepthFirstPaths.o DfsWithDirectedGraph.o Graph.o LinkedList.o -o DfsWithDirectedGraph.out
 
@@ -10,9 +9,6 @@ DepthFirstPaths.o :	DepthFirstPaths.c
 			
 Graph.o : Graph.c
 			gcc -c Graph.c 
-
-valgrind :
-			valgrind ./DfsWithDirectedGraph.out
 
 LinkedList.o :	LinkedList.c
 			gcc -c LinkedList.c
