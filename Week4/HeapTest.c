@@ -24,7 +24,7 @@ int main() {
 	int choice;
 	do {
 
-		printf(" s====================MENU==========================\n");
+		printf(" ====================MENU==========================\n");
 		printf(" 1. Insert an element into the heap\n");
 		printf(" 2. Delete minimum element from the heap\n");
 		printf(" 3. Apply HeapSort to array\n");

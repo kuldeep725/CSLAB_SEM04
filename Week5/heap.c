@@ -11,9 +11,9 @@ char indent[50];
 int j = 0;
 
 //utility function to swap two elements in array
-void swap(int *a, int p, int q) {
+void swap(Vertex *v, int p, int q) {
 	// printf("exchange %d and %d\n", a[p], a[q]);
-	int swap = a[p];
+	int swap = v->a[p];
 	a[p] = a[q];
 	a[q] = swap;
 }
@@ -26,7 +26,7 @@ void swim(int *a, int k, int ele) {
 		k = (k-1)/2;
 	}
 
-}
+}                                                                       
 
 //function to send an element down the heap maintaining heap property
 void minHeapify(int *a, int pos) {
@@ -154,7 +154,11 @@ void heapSort(int *a) {
 	int b[100];
 	int n = N;
 	for(i = 0; i <= n; i++) {
-		printf("%d ", deleteMin(a));
+		b[i] = deleteMin(a);
+		printf("%d ", b[i]);
+	}
+	for(i = 0; i <= n; i++) {
+		a[i] = b[i];
 	}
 	N = n;
 	printf("\n");
