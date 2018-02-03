@@ -7,31 +7,44 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-typedef struct Vertex {
-	int data[100];
-	int weight[100];
-} Vertex;
+typedef struct Heap {
+	// int size;
+	int *pos;
+} Heap;
 
-void swim(int *, int, int);
+typedef struct VertexNode {
+	int v;
+	int dist;
+} VertexNode;
 
-void minHeapify(int *, int);
+void createHeap(Heap *, int);
 
-void swap(int *, int, int);
+int isHeapEmpty(Heap *);
 
-void buildHeap(int *, int);
+void swim(Heap *, VertexNode **, int, int);
 
-void insert(int *, int);
+void minHeapify(Heap *, VertexNode **, int);
 
-int deleteMin(int *);
+void swap(Heap *, VertexNode **, int, int);
 
-void push(char);
+void buildHeap(Heap *, VertexNode **, int);
 
-void pop();
+void insert(Heap *, VertexNode **, int, int);
 
-void print(int *, int);
+VertexNode deleteMin(Heap *, VertexNode **);
 
-void display(int *);
+int getPosition(Heap *, int);
 
-void heapSort(int *);
+void decreaseKey(Heap *, VertexNode **, int, int);
+
+void Push(char);
+
+void Pop();
+
+void print(VertexNode **, int);
+
+void display(VertexNode **);
+
+void heapSort(Heap *, VertexNode **);
 
 #endif

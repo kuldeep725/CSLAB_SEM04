@@ -55,7 +55,7 @@ void push(List *list, int ele, int w) {
 
 Vertex pop(List *list) {
 
-	if(isEmpty(list))	return INT_MIN;		//if list is empty return INT_MIN
+	// if(isEmpty(list))	return INT_MIN;		//if list is empty return INT_MIN
 
 	Node *p = list->rear;
 	// printf("list->rear = %d\n", p->data);
@@ -97,7 +97,7 @@ void pushFront(List *list, int ele, int w) {
 
 Vertex popFront(List *list) {
 
-	if(isEmpty(list))	return INT_MIN;
+	// if(isEmpty(list))	return INT_MIN;
 
 	Node *p = list->front;
 	// int ele = p->data;
@@ -114,15 +114,15 @@ Vertex popFront(List *list) {
 
 Vertex last (List *list) {
 
-	if(isEmpty(list))	return INT_MIN;
-	return list->rear->v.data;
+	// if(isEmpty(list))	return INT_MIN;
+	return list->rear->v;
 
 }
 
 Vertex first (List *list) {
 
-	if(isEmpty(list))	return INT_MIN;
-	return list->front->v.data;
+	// if(isEmpty(list))	return INT_MIN;
+	return list->front->v;
 
 }
 
@@ -155,7 +155,7 @@ Node * next (Node *p) {
 
 Vertex getData (Node *ll) {
 
-	if(ll == NULL)	return INT_MIN;
+	// if(ll == NULL)	return INT_MIN;
 	return ll->v;
 
 }
@@ -223,7 +223,7 @@ int search(List *list, Vertex v) {
 	int i;
 	for (i = 0; ll != NULL; ll = next(ll), i++) {
 		Vertex p = getData(ll);
-		if(p.data == v.ele) {
+		if(p.data == v.data) {
 			return i;			//return index of element
 		}
 	}
@@ -232,7 +232,7 @@ int search(List *list, Vertex v) {
 
 bool contains(List *list, Vertex v) {
 	return search(list, v) != INT_MIN;		//search if element is 
-												//contained in the list
+											//present in the list
 }
 
 /* 

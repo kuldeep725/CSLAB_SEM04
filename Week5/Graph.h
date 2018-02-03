@@ -4,7 +4,7 @@
     * Roll No.  : 111601009
 
 */
-#include "LinkedList.h"
+#include "LinkedListOfStructures.h"
 #ifndef GRAPH_H
 #define GRAPH_H
 
@@ -26,7 +26,7 @@ void getGraph(Graph *, int );
 /*
 	to add a directed edge from first vertex to second
 */
-void addEdge(Graph *, int , int );
+void addEdge(Graph *, int , int, int);
 
 /*
 	to find degree of the given vertex

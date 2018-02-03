@@ -5,6 +5,7 @@
 
 */
 #include<stdio.h>
+#include"heap.h"
 
 int N = -1;
 char indent[50];
@@ -26,7 +27,7 @@ void swim(int *a, int k, int ele) {
 		k = (k-1)/2;
 	}
 
-}
+}                                                                       
 
 //function to send an element down the heap maintaining heap property
 void minHeapify(int *a, int pos) {
@@ -104,6 +105,11 @@ int deleteMin(int *a) {
 
 }
 
+void decreaseKey(int *a, int index, int key) {
+	a[index] = key;
+	swim(a, index, key);
+}
+
 //utility function to modify the array 'indent'
 void push(char c) {
 
@@ -151,9 +157,14 @@ void display(int *a) {
 void heapSort(int *a) {
 
 	int i;
+	int b[100];
 	int n = N;
 	for(i = 0; i <= n; i++) {
-		printf("%d ", deleteMin(a));
+		b[i] = deleteMin(a);
+		printf("%d ", b[i]);
+	}
+	for(i = 0; i <= n; i++) {
+		a[i] = b[i];
 	}
 	N = n;
 	printf("\n");
