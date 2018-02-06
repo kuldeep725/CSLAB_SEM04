@@ -12,8 +12,7 @@ int N = -1;
 char indent[50];
 int j = 0;
 
-void createHeap(Heap *heap, int capacity) {
-	// heap->size = 0;
+void createHeap(Heap *heap, int capacity){
 	heap->pos = (int *) malloc(sizeof(int)*capacity);
 }
 
@@ -23,7 +22,7 @@ int isHeapEmpty(Heap *heap) {
 
 //utility function to swap two elements in array
 void swap(Heap *heap, VertexNode **q, int i, int j) {
-	// printf("exchange %d and %d\n", (*q)[i], (*q)[j]);
+	
 	int temp = heap->pos[(*q)[i].v];
 	heap->pos[(*q)[i].v] = heap->pos[(*q)[j].v];
 	heap->pos[(*q)[j].v] = temp;
@@ -53,20 +52,18 @@ void minHeapify(Heap *heap, VertexNode **q, int position) {
 	if(N == 0)	return;				//nothing should be done
 
 	int smallIndex = 2*position+1;
-	// printf("================================\n");
-	// printf("turn = %d\n", (*q)[position]);
-	// printf("================================\n");
-	// printf("smallIndex = %d\n", smallIndex);
-	// printf("position = %d\n", position);
+	
 	while(position <= (N-1)/2) {
+
 		if(smallIndex < N && (*q)[smallIndex].dist > (*q)[smallIndex+1].dist)	smallIndex++;
-		// printf("smallIndex1 = %d\n", smallIndex);
-		if((*q)[smallIndex].dist < (*q)[position].dist)				swap(heap, q, smallIndex, position);
-		else									break;
+		
+		if((*q)[smallIndex].dist < (*q)[position].dist)	{
+				swap(heap, q, smallIndex, position);
+		}
+		else	break;
+
 		position = smallIndex;
 		smallIndex = 2*position+1;
-		// printf("pos1 = %d\n", position);
-		// printf("smallIndex2 = %d\n", smallIndex);
 
 	}	
 
@@ -76,16 +73,12 @@ void minHeapify(Heap *heap, VertexNode **q, int position) {
 void buildHeap(Heap *heap, VertexNode **q, int n) {
 
 	N = n-1;
-	// printf("N=%d\n", N);
 	int k = (N-1)/2;
-	// printf("k = %d\n", k);
+	
 	while(k >= 0) {
-		// printf("k = %d\n", k);
-		// printf("(*q)[%d] = %d\n", k, (*q)[k].dist);
 		minHeapify(heap, q, k);
 		k--;
 	}
-	// heap->size = N;
 
 }
 
@@ -95,16 +88,12 @@ void insert(Heap *heap, VertexNode **q, int ele, int d) {
 	(*q)[++N].v = ele;
 	(*q)[N].dist = d;
 	swim(heap, q, N, ele);
-	// heap->size++;
 
 }
 
 //to delete the minimum element in the heap
 VertexNode deleteMin(Heap *heap, VertexNode **q) {
 
-	// printf("N = %d\n", N);
-	// printf("(*q)[0] = %d\n", (*q)[0]);
-	// printf("(*q)[N] = %d\n", (*q)[N]);
 	/***********************
 		storing minimum element which has to be returned
 	************************/
@@ -123,22 +112,22 @@ VertexNode deleteMin(Heap *heap, VertexNode **q) {
 		calling function minHeapify to rearrange the tree 
 		to become heap again
 	***********************/
-	// printf("N = %d\n", N);
-	// display(q);
 	minHeapify(heap, q, 0);
-	// heap->size--;
 	return vn;
 
 }
 
+//to return the position of the 'vertex' in the heap
 int getPosition(Heap *heap, int vertex) {
 	return heap->pos[vertex];
 }
 
+//to decrease the key of the vertex and shift it up the tree (if possible)
 void decreaseKey(Heap *heap, VertexNode **q, int k, int key) {
-	// int k = heap->pos[vertex];
-	(*q)[k].dist = key;
-	swim(heap, q, k, key);
+	if(key < (*q)[k].dist) {
+		(*q)[k].dist = key;
+		swim(heap, q, k, key);
+	}
 }
 
 //utility function to modify the array 'indent'

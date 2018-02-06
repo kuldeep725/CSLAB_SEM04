@@ -12,7 +12,6 @@ typedef struct Graph {
 
 	int V;
 	List *adj;
-	// List* adj[50];
 	int E;
 	int *size;
 

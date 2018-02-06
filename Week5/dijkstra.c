@@ -1,3 +1,10 @@
+/*
+
+    * Name      : Kuldeep Singh Bhandari
+    * Roll No.  : 111601009
+	* Aim 		: To implement dijsktra's algorithm to find shortest distances
+				  of all vertices from source vertex
+*/
 #include<stdio.h>
 #include<limits.h>
 #include"heap.h"
@@ -6,7 +13,7 @@
 #define INF INT_MAX
 
 void printAll(Heap *, VertexNode *, Graph *,int[], int);
-void showDijkstraTree(VertexNode *, Graph *);
+void printShortestPath(int[], int);
 void dijkstra(Graph *, int);
 
 int main() {
@@ -16,7 +23,7 @@ int main() {
 	int u, v, weight;		//to take input vertices and weight
 	int s; 			//source vertex
 	scanf("%d%d",&V, &E);
-	// printf("V = %d, E = %d\n", V, E);
+	
 	Graph graph;
 	getGraph(&graph, V);
 	int i;
@@ -40,7 +47,7 @@ void printShortestPath(int parent[], int j)
     // Base Case : If j is source
     if (parent[j]==-1)
         return;
- 
+    
     printShortestPath(parent, parent[j]);
  
     printf("%d ", j);
@@ -52,7 +59,8 @@ void printAll(Heap *heap, VertexNode *q, Graph *g, int parent[], int s) {
 	int i;
 
     for (i = 0; i < V(g); i++) {
-        printf("\n %d->%d     %-10d %d ",s, i, q[getPosition(heap, i)].dist, s);
+    	int index = getPosition(heap, i);
+        printf("\n %d->%d     %-10d %d ",s, i, q[index].dist, s);
         printShortestPath(parent, i);
     }
 
@@ -71,9 +79,8 @@ void dijkstra(Graph *g, int s) {
 		q[i].v = i;
 		q[i].dist = INF;		//	INF is a macro for INT_MAX
 		heap.pos[i] = i;
-		// printf("q[%d] = %d\n", i, q[i].dist);
 	}
-	// insert(&q, s, 0);
+	
 	buildHeap(&heap, &q, V(g));
 	decreaseKey(&heap, &q, s, 0);
 	parent[s] = -1;
@@ -81,30 +88,20 @@ void dijkstra(Graph *g, int s) {
 	while(!isHeapEmpty(&heap)) {
 
 		VertexNode minNode = deleteMin(&heap, &q);
-		// printAll(&heap, q, g, s);
 		List list = getAdjacencyList(g, minNode.v);
-		// printf("minNode.v = %d\n", minNode.v);
-		// printf("minNode.dist = %d\n", minNode.dist);
-		// printf("q[minNode.v].dist = %d\n", q[minNode.v].dist);
 
 		while(!isEmpty(&list)) {
 
 			Vertex vertex = popFront(&list);
-			// printf("vertex.data = %d\n", vertex.data);
-			// printf("vertex.weight = %d\n", vertex.weight);
-			// printf("q[vertex.data].dist = %d\n", q[vertex.data].dist);
 			int position = getPosition(&heap, vertex.data);
-
-			if(q[position].dist > minNode.dist + vertex.weight){
-				// printf("in\n");
-				q[position].dist = minNode.dist + vertex.weight;
-				decreaseKey(&heap, &q, position, q[position].dist);
+			if(q[position].dist > minNode.dist + vertex.weight)
 				parent[vertex.data] = minNode.v;
-			}
+			decreaseKey(&heap, &q, position, minNode.dist+vertex.weight);
 
 		}
 
 	}
+
 	printAll(&heap, q, g, parent, s);
 	printf("\n");
 
