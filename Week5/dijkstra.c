@@ -94,8 +94,10 @@ void dijkstra(Graph *g, int s) {
 
 			Vertex vertex = popFront(&list);
 			int position = getPosition(&heap, vertex.data);
+
 			if(q[position].dist > minNode.dist + vertex.weight)
 				parent[vertex.data] = minNode.v;
+			
 			decreaseKey(&heap, &q, position, minNode.dist+vertex.weight);
 
 		}
