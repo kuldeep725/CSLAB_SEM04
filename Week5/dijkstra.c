@@ -107,4 +107,4 @@ void dijkstra(Graph *g, int s) {
 	printAll(&heap, q, g, parent, s);
 	printf("\n");
 
-}
+} 
