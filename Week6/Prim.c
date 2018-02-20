@@ -58,8 +58,8 @@ void prim(Graph *g) {
 
 	int s = 0;								//source vertex
 
+	buildHeap(&heap, &vc, V(g));
 	vc[s].cost = 0;
-	buildHeap(&heap, &vc, V(g));			//building heap with cost function 
 	decreaseKey(&heap, &vc, s, 0);			//decrease key of source vertex by setting it 0
 
 	while(!isHeapEmpty(&heap)) {
