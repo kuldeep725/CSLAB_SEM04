@@ -1,23 +1,23 @@
 /*
 
-    * Name      : Kuldeep Singh Bhandari
-    * Roll No.  : 111601009
+    * heap->Name      : Kuldeep Singh Bhandari
+    * Roll heap->No.  : 111601009
 
 */
 #include<stdio.h>
 #include<stdlib.h>
 #include"heap.h"
 
-int N = -1;
 char indent[50];
 int j = 0;
 
 void createHeap(Heap *heap, int capacity){
+	heap->N = -1;
 	heap->pos = (int *) malloc(sizeof(int)*capacity);
 }
 
 int isHeapEmpty(Heap *heap) {
-	return N == -1;
+	return heap->N == -1;
 }
 
 //utility function to swap two elements in array
@@ -49,13 +49,13 @@ void swim(Heap *heap, VertexNode **q, int k, int ele) {
 //function to send an element down the heap maintaining heap property
 void minHeapify(Heap *heap, VertexNode **q, int position) {
 
-	if(N == 0)	return;				//nothing should be done
+	if(heap->N == 0)	return;				//nothing should be done
 
 	int smallIndex = 2*position+1;
 	
-	while(position <= (N-1)/2) {
+	while(position <= (heap->N-1)/2) {
 
-		if(smallIndex < N && (*q)[smallIndex].dist > (*q)[smallIndex+1].dist)	smallIndex++;
+		if(smallIndex < heap->N && (*q)[smallIndex].dist > (*q)[smallIndex+1].dist)	smallIndex++;
 		
 		if((*q)[smallIndex].dist < (*q)[position].dist)	{
 				swap(heap, q, smallIndex, position);
@@ -72,8 +72,8 @@ void minHeapify(Heap *heap, VertexNode **q, int position) {
 //building heap using minHeapify
 void buildHeap(Heap *heap, VertexNode **q, int n) {
 
-	N = n-1;
-	int k = (N-1)/2;
+	heap->N = n-1;
+	int k = (heap->N-1)/2;
 	
 	while(k >= 0) {
 		minHeapify(heap, q, k);
@@ -85,9 +85,9 @@ void buildHeap(Heap *heap, VertexNode **q, int n) {
 //to insert an element in the heap
 void insert(Heap *heap, VertexNode **q, int ele, int d) {
 
-	(*q)[++N].v = ele;
-	(*q)[N].dist = d;
-	swim(heap, q, N, ele);
+	(*q)[++heap->N].v = ele;
+	(*q)[heap->N].dist = d;
+	swim(heap, q, heap->N, ele);
 
 }
 
@@ -101,13 +101,13 @@ VertexNode deleteMin(Heap *heap, VertexNode **q) {
 	vn.v = (*q)[0].v;
 	vn.dist = (*q)[0].dist;
 	/***********************
-		swaping elements in the indices 1 and N
+		swaping elements in the indices 1 and heap->N
 	***********************/
-	swap(heap, q, 0, N);
+	swap(heap, q, 0, heap->N);
 	/***********************
 		reducing the size of the heap
 	***********************/
-	N--;
+	heap->N--;
 	/***********************
 		calling function minHeapify to rearrange the tree 
 		to become heap again
@@ -147,29 +147,29 @@ void Pop() {
 }
 
 //recursive function to print the heap in tree format
-void print(VertexNode **q, int k) {
+void print(VertexNode **q, Heap *heap, int k) {
 
 	printf("%-2d\n", (*q)[k].v);
 	
-	if(2*k+2 <= N) {
+	if(2*k+2 <= heap->N) {
 		printf("%s `--", indent);
 		Push('|');
-		print(q, 2*k+2);
+		print(q, heap, 2*k+2);
 		Pop();
 	}
-	if(2*k+1 <= N) {
+	if(2*k+1 <= heap->N) {
 		printf("%s `--", indent);
 		Push(' ');
-		print(q, 2*k+1);
+		print(q, heap, 2*k+1);
 		Pop();
 	}
 
 }
 
 // to display the heap in tree format
-void display(VertexNode **q) {
+void display(VertexNode **q, Heap *heap) {
 
-	print(q, 0);
+	print(q, heap, 0);
 
 } 
 
@@ -177,11 +177,15 @@ void display(VertexNode **q) {
 void heapSort(Heap *heap, VertexNode **q) {
 
 	int i;
-	int n = N;
+	int n = heap->N;
 	for(i = 0; i <= n; i++) {
 		VertexNode vn = deleteMin(heap, q);
 		printf("%d ", vn.dist);
 	}
-	N = n;
+	heap->N = n;
 	printf("\n");
+}
+
+int heapSize(Heap *heap) {
+	return heap->N;
 }

@@ -71,7 +71,7 @@ void prim(Graph *g) {
 
 			Vertex vertex = popFront(&list);
 			int pos = getPosition(&heap, vertex.data);
-			int size = heapSize();
+			int size = heapSize(&heap);
 
 			if(pos <= size && vc[pos].cost > vertex.weight) {
 				parent[vertex.data] = minCost.v;

@@ -8,7 +8,7 @@
 #define HEAP_H
 
 typedef struct Heap {
-	// int size;
+	int N;			//size of heap
 	int *pos;
 } Heap;
 
@@ -42,9 +42,9 @@ void Push(char);
 
 void Pop();
 
-void print(Edge **, int);
+void print(Edge **, Heap*, int);
 
-void display(Edge **);
+void display(Edge **, Heap *);
 
 void heapSort(Heap *, Edge **);
 

@@ -1,23 +1,23 @@
 /*
 
-    * Name      : Kuldeep Singh Bhandari
-    * Roll No.  : 111601009
+    * heap->Name      : Kuldeep Singh Bhandari
+    * Roll heap->No.  : 111601009
 
 */
 #include<stdio.h>
 #include<stdlib.h>
 #include"heap.h"
 
-int N = -1;
 char indent[50];
 int j = 0;
 
 void createHeap(Heap *heap, int capacity){
+	heap->N = -1;
 	heap->pos = (int *) malloc(sizeof(int)*capacity);
 }
 
 int isHeapEmpty(Heap *heap) {
-	return N == -1;
+	return heap->N == -1;
 }
 
 //utility function to swap two elements in array
@@ -50,13 +50,13 @@ void swim(Heap *heap, Edge **e, int k, int ele) {
 //function to send an element down the heap maintaining heap property
 void minHeapify(Heap *heap, Edge **e, int position) {
 
-	if(N == 0)	return;				//nothing should be done
+	if(heap->N == 0)	return;				//nothing should be done
 
 	int smallIndex = 2*position+1;
 	
-	while(position <= (N-1)/2) {
+	while(position <= (heap->N-1)/2) {
 
-		if(smallIndex < N && (*e)[smallIndex].weight > (*e)[smallIndex+1].weight)	smallIndex++;
+		if(smallIndex < heap->N && (*e)[smallIndex].weight > (*e)[smallIndex+1].weight)	smallIndex++;
 		
 		if((*e)[smallIndex].weight < (*e)[position].weight)	{
 				swap(heap, e, smallIndex, position);
@@ -73,8 +73,8 @@ void minHeapify(Heap *heap, Edge **e, int position) {
 //building heap using minHeapify
 void buildHeap(Heap *heap, Edge **e, int n) {
 
-	N = n-1;
-	int k = (N-1)/2;
+	heap->N = n-1;
+	int k = (heap->N-1)/2;
 	
 	while(k >= 0) {
 		minHeapify(heap, e, k);
@@ -86,9 +86,9 @@ void buildHeap(Heap *heap, Edge **e, int n) {
 //to insert an element in the heap
 void insert(Heap *heap, Edge **e, int ele, int d) {
 
-	(*e)[++N].v = ele;
-	(*e)[N].weight = d;
-	swim(heap, e, N, ele);
+	(*e)[++heap->N].v = ele;
+	(*e)[heap->N].weight = d;
+	swim(heap, e, heap->N, ele);
 
 }
 
@@ -103,13 +103,13 @@ Edge deleteMin(Heap *heap, Edge **e) {
 	vn.v = (*e)[0].v;
 	vn.weight = (*e)[0].weight;
 	/***********************
-		swaping elements in the indices 1 and N
+		swaping elements in the indices 1 and heap->N
 	***********************/
-	swap(heap, e, 0, N);
+	swap(heap, e, 0, heap->N);
 	/***********************
 		reducing the size of the heap
 	***********************/
-	N--;
+	heap->N--;
 	/***********************
 		calling function minHeapify to rearrange the tree 
 		to become heap again
@@ -149,29 +149,29 @@ void Pop() {
 }
 
 //recursive function to print the heap in tree format
-void print(Edge **e, int k) {
+void print(Edge **e, Heap *heap, int k) {
 
 	printf("%-2d\n", (*e)[k].v);
 	
-	if(2*k+2 <= N) {
+	if(2*k+2 <= heap->N) {
 		printf("%s `--", indent);
 		Push('|');
-		print(e, 2*k+2);
+		print(e, heap, 2*k+2);
 		Pop();
 	}
-	if(2*k+1 <= N) {
+	if(2*k+1 <= heap->N) {
 		printf("%s `--", indent);
 		Push(' ');
-		print(e, 2*k+1);
+		print(e, heap, 2*k+1);
 		Pop();
 	}
 
 }
 
 // to display the heap in tree format
-void display(Edge **e) {
+void display(Edge **e, Heap *heap) {
 
-	print(e, 0);
+	print(e, heap,  0);
 
 } 
 
@@ -179,15 +179,15 @@ void display(Edge **e) {
 void heapSort(Heap *heap, Edge **e) {
 
 	int i;
-	int n = N;
+	int n = heap->N;
 	for(i = 0; i <= n; i++) {
 		Edge vn = deleteMin(heap, e);
 		printf("%d ", vn.weight);
 	}
-	N = n;
+	heap->N = n;
 	printf("\n");
 }
 
-int heapSize() {
-	return N;
+int heapSize(Heap *heap) {
+	return heap->N;
 }
