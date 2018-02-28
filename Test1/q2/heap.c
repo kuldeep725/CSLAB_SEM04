@@ -48,9 +48,7 @@ void swim(Heap *heap, VertexNode **q, int k, int ele) {
 
 //function to send an element down the heap maintaining heap property
 void minHeapify(Heap *heap, VertexNode **q, int position) {
-#include<limits.h>
-#include"heap.h"
-#include"Graph.h"
+
 	if(heap->N == 0)	return;				//nothing should be done
 
 	int smallIndex = 2*position+1;
