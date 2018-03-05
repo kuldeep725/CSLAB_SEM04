@@ -50,7 +50,6 @@ void dfs(Path *path, Graph *g, int v) {
 		// printf("data = %d\n", getData(p));
 		int current = getData(p);
 		if(!path->visited[current]) {
-			path->visited[current] = 1;
 			path->parent[current] = v;		//making 'v' to be parent of 'current'
 			dfs(path, g, current);			//calling dfs for current vertex
 		}
