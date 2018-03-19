@@ -99,7 +99,7 @@ void bellmanFord(Graph *g, int s) {
 	int negCycle;
 	int flag2 = 0;
 
-	for(j = 0; j <= V(g); j++) {
+	for(j = 1; j <= V(g); j++) {
 
 		int flag = 0;
 		for(i = 0; i < V(g); i++) {

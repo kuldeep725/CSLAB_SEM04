@@ -23,20 +23,24 @@ typedef struct BTree {
 } BTree;
 
 //printing BTree
-void printBTree(Node *x) {
+void printBTree(Node *x, int sz) {
 
 	int i;
-	for(i = 0; i < x->n; i++) {
+	for(i = x->n-1; i >= 0; i--) {
 		if(!x->leaf) {
-			printBTree(x->c[i]);
+			printBTree(x->c[i+1], sz+6);
 		}
-		printf("%d ", x->key[i]);
+		printf("%*s", sz, "");
+		printf("%d\n", x->key[i]);
 	}
+
 	//to print the last child of x if it exists
 	if(!x->leaf) {
-		printBTree(x->c[i]);
+		printBTree(x->c[0], sz+6);
 	}
+
 }
+
 
 //spliting child of x at position i
 void splitChild(BTree *T, Node *x, int i) {
@@ -188,7 +192,7 @@ int main() {
 		scanf("%d", &k);
 		insertBTree(&T, k);
 		printf("\n\n==================After inserting %d====================\n\n", k);
-		printBTree(T.root);
+		printBTree(T.root, 0);
 	}
 
 	printf("\n");
@@ -210,7 +214,6 @@ int main() {
 		else {
 			printf("index %d\n", index);
 		}
-		printf("\n=======================================\n");
 
 	}
 
