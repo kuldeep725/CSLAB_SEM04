@@ -402,6 +402,8 @@ int deleteBTree (BTree *T, Node *x, int k) {
         	fill(T, x, index);
         	// printf("6\n");
         }
+        //flag checks if index was x->n and 
+        //index > x->n checks if merge has happened
         if(flag && index > x->n) {
         	// printf("7\n");
         	deleteBTree(T, x->c[index-1], k);
