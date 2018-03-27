@@ -23,7 +23,7 @@ typedef struct BTree {
 } BTree;
 
 
-void deleteBTree (BTree *, Node *, int );
+int deleteBTree (BTree *, Node *, int );
 void deleteFromNonLeaf(BTree *, Node *, int);
 //printing BTree
 void printBTree(Node *x, int sz) {
@@ -274,6 +274,7 @@ void merge(BTree *T, Node *x, int i) {
 	free(s);
 
 }
+
 void fill(BTree *T, Node *x, int i) {
 
 	// printf("fill\n");
@@ -324,7 +325,7 @@ void deleteFromLeaf(Node *x, int i) {
 
 	// printf("deleteFromLeaf\n");
 	int j = i+1;
-	printf("j = %d", j);
+
 	while(j < x->n) {
 		x->key[j-1] = x->key[j];
 		j++;
@@ -364,13 +365,13 @@ void deleteFromNonLeaf(BTree *T, Node *x, int i) {
 
 }
 
-void deleteBTree (BTree *T, Node *x, int k) {
+int deleteBTree (BTree *T, Node *x, int k) {
 
 	// printf("deleteBTree\n");
 	int t = T->t;
 
 	if(x == NULL) {
-		return;
+		return 0;
 	}
 
 	int index = getKeyIndex(x, k);
@@ -389,7 +390,7 @@ void deleteBTree (BTree *T, Node *x, int k) {
 		// printf("3\n");
 		if(x->leaf) {
 			printf("The key %d doesn't exist in the BTree\n", k);
-			return;
+			return 0;
 		}
 		// The key to be removed is present in the sub-tree rooted with this node
         // The flag indicates whether the key is present in the sub-tree rooted
@@ -413,7 +414,7 @@ void deleteBTree (BTree *T, Node *x, int k) {
         }
  
 	}
-
+	return 1;
 }
 
 int main() {
@@ -422,6 +423,7 @@ int main() {
 	int i;
 	int k;
 	int index;
+	int isDeleted;
 	// scanf("%d", &n);
 
 	BTree T;
@@ -453,9 +455,12 @@ int main() {
 			case 2 :
 				printf("Enter the element to be deleted : ");
 				scanf("%d", &k);
-				deleteBTree(&T, T.root, k);
-				printf("\n\n==================After deleting %d====================\n\n", k);
-				printBTree(T.root, 0);
+				isDeleted = deleteBTree(&T, T.root, k);
+
+				if(isDeleted) {
+					printf("\n\n==================After deleting %d====================\n\n", k);
+					printBTree(T.root, 0);
+				}					
 				break;
 
 			case 3 : 
