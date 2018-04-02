@@ -19,13 +19,22 @@ typedef struct SplayTree {
 	Node *root;
 } SplayTree;
 
-void rotateLeft(Node *x) {
+void rotateLeft(SplayTree *T, Node *x) {
 
+	printf("rotateLeft\n");
 	Node *p = x->parent;
 	Node *gp = p->parent;
+
+	printf("rotateLeft : p->key = %d\n", p->key);
+	
+	if(p == T->root) {
+		T->root = x;
+	}
+
 	x->parent = gp;
 
 	if(gp != NULL) {
+		printf("rotateLeft : gp->key = %d\n", gp->key);
 		if(gp->left == p) 
 			gp->left = x;
 		else 
@@ -33,18 +42,33 @@ void rotateLeft(Node *x) {
 	}
 	
 	p->right = x->left;
+
+	if(x->left != NULL)
+		x->left->parent = p;
+
 	x->left = p;
 	p->parent = x;
 
 }
 
-void rotateRight(Node *x) {
+void rotateRight(SplayTree *T, Node *x) {
 
+	printf("rotateRight\n");
 	Node *p = x->parent;
 	Node *gp = p->parent;
+	if(p != NULL) {
+		printf("rotateRight : p->key = %d\n", p->key);
+	}
+	
+	
+	if(p == T->root) {
+		T->root = x;
+	}
+
 	x->parent = gp;
 
 	if(gp != NULL) {
+		printf("rotateRight : gp->key = %d\n", gp->key);
 		if(gp->left == p) 
 			gp->left = x;
 		else 
@@ -52,123 +76,182 @@ void rotateRight(Node *x) {
 	}
 
 	p->left = x->right;
+
+	if(x->right != NULL)
+		x->right->parent = p;
+
 	x->right = p;
 	p->parent = x;
 
 }
 
-void rotate(Node *x) {
+void rotate(SplayTree *T, Node *x) {
+
+	printf("rotate\n");
+	if(x == NULL) return;
 
 	Node *p = x->parent;
 	
 	if(p == NULL)	return;
+	printf("x->key = %d\n", x->key);
+	printf("p->key = %d\n", p->key);
+	if(p->left != NULL)
+		printf("p->left->key = %d\n", p->left->key);
+	if(p->right != NULL)
+		printf("p->right->key = %d\n", p->right->key);
 
 	if(p->left == x) {
-		rotateRight(x);
+		rotateRight(T, x);
 	}
 	else {
-		rotateLeft(x);
+		rotateLeft(T, x);
 	}
 
 }
 
-void zigzig(Node *x) {
+void zigzig(SplayTree *T, Node *x) {
+	printf("zigzig\n");
 
 	if(x == NULL) 	return;
-
-	rotate(x->parent);
-	rotate(x);
+	printf("2. x->key = %d\n", x->key);
+	rotate(T, x->parent);
+	rotate(T, x);
 
 }
 
-void zigzag (Node *x) {
+void zigzag (SplayTree *T, Node *x) {
 
+	printf("zigzag\n");
 	if(x == NULL) 	return;
-
-	rotate(x);
-	rotate(x);
+	printf("2. x->key = %d\n", x->key);
+	rotate(T, x);
+	rotate(T, x);
 
 }
 
-void splay(Node *x) {
+void splay(SplayTree *T, Node *x) {
 
-
+	printf("splay fired...\n");
 	if(x == NULL) {
 		return;
 	}
-
+	printf("1. x->key = %d\n", x->key);
 	if(x->parent == NULL) {
-		rotate(x);
+		rotate(T, x);
 	}
 
 	else {
 
 		Node *p = x->parent;
 		Node *gp = p->parent;
-		int cond1 = (p->left == x && g->left == p);
-		int cond2 = (p->right == x && g->right == p);
-
-		if(cond1 && cond2) 
-			zigzig(x);
+		int cond1 = 0;
+		int cond2 = 0;
+		if(gp != NULL) {
+			cond1 = (p->left == x && gp->left == p);
+			cond2 = (p->right == x && gp->right == p);
+		}
+		
+		if(cond1 || cond2) 
+			zigzig(T, x);
 		
 		else 
-			zigzag(x);
+			zigzag(T, x);
 
-		splay(x);
+		splay(T, x);
 		
 	}
 
 }
 
-Node *searchUtil(Node *root, int key) {
+Node *searchUtil(SplayTree *T, Node *root, int key) {
 
 	if(root == NULL) {
 		return root;
 	}
-	if(root->key == key) {
-		return root;
+	// if(root->key == key) {
+	// 	return root;
+	// }
+
+	// else if(root->key > key) {
+
+	// 	if(root->left == NULL) 	return root;
+	// 	return searchUtil(T, root->left, key);
+
+	// }
+	// else {
+
+	// 	if(root->right == NULL) 	return root;
+	// 	return searchUtil(T, root->right, key);
+
+	// }
+	Node *x = root;
+	Node *curr = x;
+
+	while(x != NULL) {
+
+		curr = x;
+
+		if(x->key == key) {
+			break;
+		}
+		else if(x->key > key) {
+			x = x->left;
+		}
+		else {
+			x = x->right;
+		}
 	}
-
-	else if(root->key > key) {
-
-		if(root->left == NULL) 	return root;
-		return search(root->left, key);
-
-	}
-	else {
-
-		if(root->right == NULL) 	return root;
-		return search(root->right, key);
-
-	}
+	return curr;
 
 }
 
-Node * search(Node *x, int key) {
+Node * search(SplayTree *T, Node *x, int key) {
 
-	Node *searchNode = searchUtil(x, key);
+	Node *searchNode = searchUtil(T, x, key);
 	//splaying searchNode	
-	splay(searchNode);
+	splay(T, searchNode);
 
 	if(searchNode->key == key) {
 		return searchNode;
 	}
-	else {
-		return NULL;
-	}
+	return NULL;
 
 }
 
-Node *insertUtil(Node *x, int key) {
+Node *insertUtil(SplayTree *T, Node *x, int key) {
 
 	Node *p = x;
+	Node *node = (Node *) malloc(sizeof(Node));
+	node->left = NULL;
+	node->right = NULL;
+	node->key = key;
+
 	while(p != NULL) {
 
+		if(p->key > key) {
+
+			if(p->left == NULL) {
+				p->left = node;
+				node->parent = p;
+				break;
+			}
+			p = p->left;
+		}
+		else {
+			
+			if(p->right == NULL) {
+				p->right = node;
+				node->parent = p;
+				break;
+			}
+			p = p->right;
+		}
 	}
+	return node;
 
 }
 
-Node * insert(Node *root, int key) {
+void * insert(SplayTree *T, Node *root, int key) {
 	
 	if(root == NULL) {
 		
@@ -177,15 +260,16 @@ Node * insert(Node *root, int key) {
 		root->right = NULL;
 		root->key = key;
 		root->parent = NULL;
+		T->root = root;
 
 	}
 	else {
 
-		Node *insertNode = insertUtil(root, key);
-		splay(insertNode);
+		Node *insertNode = insertUtil(T, root, key);
+		printf("insertNode->key = %d\n", insertNode->key);
+		splay(T, insertNode);
 
 	}
-	return root;
 }
 
 void print(Node *root, int gap) {
@@ -215,7 +299,7 @@ Node * findMin(Node *root) {
 
 }
 
-void inorder(Node *root) {
+void inorder( Node *root) {
 
 	if(root == NULL)	return;
 
@@ -274,7 +358,7 @@ int main() {
 			case 1 :
 				printf("Enter the key to be searched in Splay Tree : ");
 				scanf("%d", &key);
-				searchNode = search(T.root, key);
+				searchNode = search(&T, T.root, key);
 				if(searchNode == NULL) {
 					printf("Key %d is not found\n", key);
 				}
@@ -287,7 +371,8 @@ int main() {
 			case 2 :
 				printf("Enter the key to be inserted in Splay Tree : "); 
 				scanf("%d", &key);
-				T.root = insert(T.root, key);
+				insert(&T, T.root, key);
+				// printf("root = %d\n", (T.root)->key);
 				break;
 
 			/******Find minimum key in Splay Tree******/
@@ -331,7 +416,7 @@ int main() {
 			case 7 :
 				printf("Enter the key whose node is to be deleted :\n");
 				scanf("%d", &key);
-				Node *x = search(T.root, key);
+				Node *x = search(&T, T.root, key);
 				
 				if(x == NULL) {
 					printf("Given key is not in the Splay Tree.\n");
@@ -362,3 +447,4 @@ int main() {
 
 	return 0;
 }
+// 2 5 2 20 2 15 1 10 2 25
