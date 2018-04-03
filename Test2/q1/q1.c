@@ -190,7 +190,7 @@ void deleteNode (BST *T, Node *x) {
 				p->left = c;
 			}
 		}
-		
+
 		x->parent = NULL;
 		x->left = NULL;
 		free(x);
